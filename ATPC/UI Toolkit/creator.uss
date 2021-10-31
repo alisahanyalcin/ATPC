@@ -1,0 +1,40 @@
+.main {
+    margin: 5px 10px;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+    flex-grow: 1;
+}
+
+.btnContainer {
+    justify-content: flex-end;
+}
+
+.elements {
+    margin-bottom: 4px;
+}
+
+.btnElement {
+    font-size: 15px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    color: rgb(217, 217, 217);
+    -unity-font-style: normal;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    -unity-text-outline-width: 0;
+}
+
+.helpBox {
+    margin: 5px;
+    padding: 5px;
+    -unity-font-style: bold;
+}
+
+.preview {
+}

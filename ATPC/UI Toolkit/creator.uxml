@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/ATPC/Windows/creator.uss?fileID=7433441132597879392&amp;guid=3efd6c3a8343d794d94089d5ed8867da&amp;type=3#creator" />
+    <ui:VisualElement name="main" class="main" style="display: flex;">
+        <ui:VisualElement name="container1" class="container">
+            <uie:ObjectField label="Player" name="player" type="UnityEngine.GameObject, UnityEngine.CoreModule" class="elements" style="height: 19px;" />
+            <uie:ObjectField label="Animator" name="animator" type="UnityEngine.RuntimeAnimatorController, UnityEngine.AnimationModule" class="elements" />
+            <uie:ObjectField label="Avatar" name="avatar" type="UnityEngine.GameObject, UnityEngine.CoreModule" class="elements" />
+            <uie:ObjectField label="Camera" name="camera" type="UnityEngine.GameObject, UnityEngine.CoreModule" class="elements" style="height: 19px;" />
+            <uie:TagField label="Player Tag" value="Player" name="playerTag" class="elements" />
+            <uie:LayerField label="Player Layer" name="playerLayer" class="elements" />
+            <uie:LayerMaskField label="Walkable Layer" name="walkableLayer" class="elements" style="display: flex; visibility: visible;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="container2" class="container btnContainer">
+            <ui:HelpBox text="Help Box" display-tooltip-when-elided="true" message-type="Info" name="helpBox" class="elements helpBox" />
+            <ui:Button text="Create" display-tooltip-when-elided="true" name="createButton" class="btnElement elements" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
