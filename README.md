@@ -1,6 +1,6 @@
 ## ATPC
 
--Soon-
+This project is a third-person character control system built on the basis of "Starter Assets - Third Person Character Controller".
 
 ## Requires
 
