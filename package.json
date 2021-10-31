@@ -1,0 +1,20 @@
+{
+  "name": "com.alisahanyalcin.atpc",
+  "version": "1",
+  "displayName": "Advanced Third Person Controller",
+  "description": "Advanced Third Person Controller.",
+  "unity": "2021.1",
+  "dependencies": {},
+  "keywords": [
+    "unity",
+    "controller",
+    "unity-asset",
+    "third-person",
+    "third-person-character-controller"
+  ],
+  "author": {
+    "name": "Ali Şahan Yalçın",
+    "email": "alisahanyalcin4@gmail.com",
+    "url": "https://github.com/alisahanyalcin/ATPC"
+  }
+}
