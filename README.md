@@ -6,6 +6,7 @@ This project is a third-person character control system built on the basis of "S
 
 - Unity Cinemachine
 - Unity new Input System
+- UI Toolkit
 - Starter Assets - Third Person Character Controller (this asset not required but this project use this asset)
 
 ## Importing
