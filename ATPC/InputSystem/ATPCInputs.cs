@@ -12,6 +12,7 @@ namespace alisahanyalcin
         [SerializeField] private bool jump;
         [SerializeField] private bool crouch;
         [SerializeField] private bool sprint;
+        [SerializeField] private bool roll;
 
         [Header("Movement Settings")]
         [SerializeField] private bool analogMovement;
@@ -35,6 +36,11 @@ namespace alisahanyalcin
         public void OnJump(InputAction.CallbackContext value)
         {
             JumpInput(value.action.triggered);
+        }
+
+        public void OnRoll(InputAction.CallbackContext value)
+        {
+            RollInput(value.action.triggered);
         }
 
         public void OnCrouch(InputAction.CallbackContext value)
@@ -62,6 +68,11 @@ namespace alisahanyalcin
             jump = newJumpState;
         }
 
+        private void RollInput(bool newRollState)
+        {
+            roll = newRollState;
+        }
+
         private void CrouchInput(bool newCrouchState)
         {
             crouch = newCrouchState;
@@ -85,6 +96,11 @@ namespace alisahanyalcin
         public bool IsJumping()
         {
             return jump;
+        }
+
+        public bool IsRolling()
+        {
+            return roll;
         }
 
         public bool IsCrouching()

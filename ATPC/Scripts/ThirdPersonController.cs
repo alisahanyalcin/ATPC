@@ -63,6 +63,7 @@ namespace alisahanyalcin
         private int _animHashSpeed;
         private int _animHashGrounded;
         private int _animHashJump;
+        private int _animHashRoll;
         private int _animHashCrouch;
         private int _animHashFreeFall;
         private int _animHashMotionSpeed;
@@ -83,6 +84,7 @@ namespace alisahanyalcin
             JumpAndGravity();
             GroundedCheck();
             Crouch();
+            Roll();
             Move();
             CameraRotation();
         }
@@ -92,6 +94,7 @@ namespace alisahanyalcin
             _animHashSpeed = Animator.StringToHash("Speed");
             _animHashGrounded = Animator.StringToHash("Grounded");
             _animHashJump = Animator.StringToHash("Jump");
+            _animHashRoll = Animator.StringToHash("Roll");
             _animHashCrouch = Animator.StringToHash("Crouch");
             _animHashFreeFall = Animator.StringToHash("FreeFall");
             _animHashMotionSpeed = Animator.StringToHash("MotionSpeed");
@@ -164,6 +167,12 @@ namespace alisahanyalcin
         private void Crouch()
         {
             animator.SetBool(_animHashCrouch, input.IsCrouching());
+        }
+
+        private void Roll()
+        {
+            if (controller.velocity != Vector3.zero)
+                animator.SetBool(_animHashRoll, input.IsRolling());
         }
 
         private void JumpAndGravity()
