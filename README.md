@@ -9,9 +9,9 @@ This project is a third-person character control system built on the basis of "S
 - Unity new Input System
 - Starter Assets - Third Person Character Controller (this asset not required but this project use this asset)
 
-## Importing
+## Downloading & Importing
 
-To use this in your Unity project import it from Unity Package Manager. You can [download it and import it from your hard drive](https://docs.unity3d.com/Manual/upm-ui-local.html), or [link to it from github directly](https://docs.unity3d.com/Manual/upm-ui-giturl.html).
+You can download the latest version for unitypackage [here](https://github.com/alisahanyalcin/ATPC/releases)
 
 ## How to
 
