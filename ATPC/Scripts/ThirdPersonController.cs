@@ -18,12 +18,11 @@ namespace alisahanyalcin
         [SerializeField] private float rotationSmoothTime = 0.005f;
         [SerializeField] private float smoothSpeed = 0.15f;
         [SerializeField] private float speedChangeRate = 10.0f;
+        [SerializeField] private bool isPlayerDied = false;
 
-        [Space(10)]
+        [Header("Jump")]
         [SerializeField] private float jumpHeight = 1.2f;
         [SerializeField] private float gravity = -15.0f;
-
-        [Space(10)]
         [SerializeField] private float jumpTimeout = 0.5f;
         [SerializeField] private float fallTimeout = 0.15f;
 
@@ -39,7 +38,12 @@ namespace alisahanyalcin
         [SerializeField] private float topClamp = 70.0f;
         [SerializeField] private float bottomClamp = -30.0f;
 
-        // cinemachine
+        [Header("Ragdoll")]
+        [SerializeField] private Rigidbody[] ragdollBodies;
+        [SerializeField] private float explosionForce;
+        [SerializeField] private float explosionRadius;
+
+        [Header("Cinemachine")]
         public Camera mainCamera;
         [SerializeField] private float cameraAngleOverride = 0.0f;
         private float _cinemachineTargetYaw;
@@ -71,22 +75,32 @@ namespace alisahanyalcin
         private const float SpeedOffset = 0.1f;
 
         private const float Threshold = 0.01f;
-
         private void Start()
         {
             AssignAnimationHash();
             _jumpTimeoutDelta = jumpTimeout;
             _fallTimeoutDelta = fallTimeout;
+
+            ragdollBodies = GetComponentsInChildren<Rigidbody>();
+            ToggleRagdoll(false);
         }
 
         private void Update()
         {
-            JumpAndGravity();
-            GroundedCheck();
-            Crouch();
-            Roll();
-            Move();
-            CameraRotation();
+            switch (isPlayerDied)
+            {
+                case true:
+                    Die();
+                    break;
+                case false:
+                    JumpAndGravity();
+                    GroundedCheck();
+                    Crouch();
+                    Roll();
+                    Move();
+                    CameraRotation();
+                    break;
+            }
         }
 
         private void AssignAnimationHash()
@@ -118,7 +132,7 @@ namespace alisahanyalcin
         private void Move()
         {
             Vector2 getMove = input.GetMove();
-            _currentVector = Vector2.SmoothDamp(_currentVector, getMove, ref _smoothInputVelocity, smoothSpeed);
+            _currentVector = Vector2.SmoothDamp(_currentVector, getMove, ref _smoothInputVelocity, smoothSpeed) * Time.deltaTime;
 
             float targetSpeed = walkSpeed;
 
@@ -146,7 +160,7 @@ namespace alisahanyalcin
 
 			_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * speedChangeRate);
 
-			Vector3 inputDirection = new Vector3(_currentVector.x, 0.0f, _currentVector.y);
+			Vector3 inputDirection = new Vector3(_currentVector.x, 0.0f, _currentVector.y).normalized;
 
 			if (_currentVector != Vector2.zero)
 			{
@@ -230,6 +244,23 @@ namespace alisahanyalcin
         {
 	        grounded = Physics.CheckSphere(spherePosition.transform.position, groundedRadius, groundLayers, QueryTriggerInteraction.Ignore);
 	        animator.SetBool(_animHashGrounded, grounded);
+        }
+
+        private void Die()
+        {
+            ToggleRagdoll(true);
+            foreach (Rigidbody rb in ragdollBodies)
+            {
+                rb.AddExplosionForce(explosionForce, new Vector3(-1f, 0.5f, -1f), explosionRadius, 0f, ForceMode.Impulse);
+            }
+        }
+        private void ToggleRagdoll(bool state)
+        {
+            animator.enabled = !state;
+            foreach (Rigidbody rb in ragdollBodies)
+            {
+                rb.isKinematic = !state;
+            }
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
