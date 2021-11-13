@@ -15,10 +15,18 @@ namespace alisahanyalcin
         [SerializeField] private float walkSpeed = 3.0f;
         [SerializeField] private float crouchSpeed = 2.0f;
         [SerializeField] private float sprintSpeed = 6.0f;
+        [SerializeField] private float rollSpeed = 8.0f;
         [SerializeField] private float rotationSmoothTime = 0.005f;
         [SerializeField] private float smoothSpeed = 0.15f;
         [SerializeField] private float speedChangeRate = 10.0f;
         [SerializeField] private bool isPlayerDied = false;
+        private float _speed;
+        private float _animationBlend;
+        private float _rotationVelocity;
+        private float _verticalVelocity;
+        private Vector2 _currentVector;
+        private Vector2 _smoothInputVelocity;
+        private const float TerminalVelocity = 53.0f;
 
         [Header("Jump")]
         [SerializeField] private float jumpHeight = 1.2f;
@@ -34,30 +42,18 @@ namespace alisahanyalcin
         public LayerMask groundLayers;
 
         [Header("Cinemachine")]
+        public Camera mainCamera;
         public GameObject cinemachineCameraTarget;
         [SerializeField] private float topClamp = 70.0f;
         [SerializeField] private float bottomClamp = -30.0f;
-
-        [Header("Ragdoll")]
-        [SerializeField] private Rigidbody[] ragdollBodies;
-        [SerializeField] private float explosionForce;
-        [SerializeField] private float explosionRadius;
-
-        [Header("Cinemachine")]
-        public Camera mainCamera;
         [SerializeField] private float cameraAngleOverride = 0.0f;
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
 
-        // player
-        private float _speed;
-        private float _animationBlend;
-        private float _rotationVelocity;
-        private float _verticalVelocity;
-        private const float TerminalVelocity = 53.0f;
-
-        private Vector2 _currentVector;
-        private Vector2 _smoothInputVelocity;
+        [Header("Ragdoll")]
+        [SerializeField] private Rigidbody[] ragdollBodies;
+        [SerializeField] private float explosionForce = 10f;
+        [SerializeField] private float explosionRadius = 1.5f;
 
         // timeout
         private float _jumpTimeoutDelta;
@@ -72,9 +68,10 @@ namespace alisahanyalcin
         private int _animHashFreeFall;
         private int _animHashMotionSpeed;
         private float _targetRotation = 0.0f;
-        private const float SpeedOffset = 0.1f;
 
+        private const float SpeedOffset = 0.1f;
         private const float Threshold = 0.01f;
+
         private void Start()
         {
             AssignAnimationHash();
@@ -142,6 +139,9 @@ namespace alisahanyalcin
             if (input.IsCrouching())
                 targetSpeed = crouchSpeed;
 
+            if (input.IsRolling())
+                targetSpeed = rollSpeed;
+
 			if (getMove == Vector2.zero) targetSpeed = 0.0f;
 
             var velocity = controller.velocity;
@@ -172,10 +172,10 @@ namespace alisahanyalcin
 
 			Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-			controller.Move(targetDirection * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
 			animator.SetFloat(_animHashSpeed, _animationBlend);
 			animator.SetFloat(_animHashMotionSpeed, inputMagnitude);
+			controller.Move(targetDirection * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
 		}
 
         private void Crouch()

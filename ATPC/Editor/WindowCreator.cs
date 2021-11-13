@@ -97,7 +97,7 @@ namespace alisahanyalcin
                 cc.skinWidth = 0.02f;
                 cc.minMoveDistance = 0f;
                 cc.center = new Vector3(0, 0.93f, 0);
-                cc.radius = 0.28f;
+                cc.radius = 0.2f;
                 cc.height = 1.8f;
 
                 var tpc = playerObject.AddComponent<ThirdPersonController>();
